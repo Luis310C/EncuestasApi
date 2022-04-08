@@ -46,10 +46,17 @@ namespace EncuestasApi
         
         
         }
-        //public async Task<Object> ObtenerRespuestas(int codigoEncuestas) { 
-         
+        public async Task<Object> ObtenerRespuestas(int codigoEncuestas) {
+            return await _db.Respuestas.Where(respuesta => respuesta.RespuestaEncuestaNavigation.Encuesta == codigoEncuestas).Select(
+                respuesta=>new { 
+                CodigoRespuesta  = respuesta.RespuestaEncuestaNavigation.RespuestaId,
+                Pregunta = respuesta.CampoNavigation.TítuloCampo,
+                Respuesta = respuesta.Respuesta1,
+                Encuesta = respuesta.RespuestaEncuestaNavigation.EncuestaNavigation.NombreEncuesta
+                }
+                ).OrderByDescending(respuesta=>respuesta.CodigoRespuesta).ToListAsync();
         
-        //}
+        }
 
         public async Task<string> ResponderEncuesta(RespuestaEncuestaResponse respuesta) {
             Respuestaencuestum respuestaActual = new Respuestaencuestum()

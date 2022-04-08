@@ -40,14 +40,16 @@ namespace EncuestasApi.Controllers
             return Ok(contestar);
        
         }
-        //[Authorize]
-        //[HttpGet]
-        //[Route("respuestas")]
-        //public async Task<ActionResult<Object>> GetRespuestas(int codigoEncuesta) {
-        //    var respuestas = await encuestaService.
-        
-        
-        
-        //}
+        [Authorize]
+        [HttpGet]
+        [Route("respuestas")]
+        public async Task<ActionResult<Object>> GetRespuestas(int codigoEncuesta) {
+            var respuestas = await encuestaService.ObtenerRespuestas(codigoEncuesta);
+            return Ok(respuestas);
+
+
+
+
+        }
     }
 }
